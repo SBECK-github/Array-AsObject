@@ -12,7 +12,7 @@ use strict;
 use Sort::DataTypes qw(sort_by_method sort_valid_method);
 
 use vars qw($VERSION);
-$VERSION = "1.02";
+$VERSION = "1.03";
 
 ###############################################################################
 # BASE METHODS
