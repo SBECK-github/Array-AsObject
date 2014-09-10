@@ -1,22 +1,11 @@
 #!/usr/bin/perl -w
 
-require 5.001;
-
-$runtests=shift(@ARGV);
-if ( -f "t/test.pl" ) {
-  require "t/test.pl";
-  $dir="./lib";
-  $tdir="t";
-} elsif ( -f "test.pl" ) {
-  require "test.pl";
-  $dir="../lib";
-  $tdir=".";
-} else {
-  die "ERROR: cannot find test.pl\n";
+BEGIN {
+  use Test::Inter;
+  $t = new Test::Inter 'index/rindex';
 }
 
-unshift(@INC,$dir);
-use Array::AsObject;
+BEGIN { $t->use_ok('Array::AsObject'); }
 
 sub test {
   ($o,$val) = @_;
@@ -33,62 +22,39 @@ sub test {
 }
 
 %obj       = ();
-$o         = new Array::AsObject qw( a b c a b );
-$obj{'01'} = $o;
+$obj{'01'} = new Array::AsObject qw( a b c a b );
 
 $i         = [ qw(a b) ];
-$o         = new Array::AsObject ('a', $i, $i, 'b', undef, 'a');
-$obj{'02'} = $o;
+$obj{'02'} = new Array::AsObject ('a', $i, $i, 'b', undef, 'a');
 
 $j         = [ qw(a b) ];
-$o         = new Array::AsObject ('a', $i, $j, undef, 'b', undef, 'a');
-$obj{'03'} = $o;
+$obj{'03'} = new Array::AsObject ('a', $i, $j, undef, 'b', undef, 'a');
 
+$tests = "
 
-$tests = [
-           [
-             [ qw(01) ],
-             [ qw(-- -1 -- -- -1) ],
-           ],
+01       => -- -1 -- -- -1
 
-           [
-             [ qw(01 a) ],
-             [ qw(0 3 -- 0 -- 3 0 -- 3) ],
-           ],
+01 a     => 0 3 -- 0 -- 3 0 -- 3
 
-           [
-             [ qw(01 z) ],
-             [ qw(-- -1 -- -- -1) ],
-           ],
+01 z     => -- -1 -- -- -1
 
-           [
-             [ qw(02) ],
-             [ qw(4 -- 4 -- 4 -- 4) ],
-           ],
+02       => 4 -- 4 -- 4 -- 4
 
-           [
-             [ qw(02 a) ],
-             [ qw(0 5 -- 0 -- 5 0 -- 5) ],
-           ],
+02 a     => 0 5 -- 0 -- 5 0 -- 5
 
-           [
-             [ '02', $i ],
-             [ qw(1 2 -- 1 -- 2 1 -- 2) ],
-           ],
+02 z     => -- -1 -- -- -1
 
-           [
-             [ qw(02 z) ],
-             [ qw(-- -1 -- -- -1) ],
-           ],
+03       => 3 5 -- 3 -- 5 3 -- 5
 
-           [
-             [ qw(03) ],
-             [ qw(3 5 -- 3 -- 5 3 -- 5) ],
-           ],
-         ];
+";
 
-print "index/rindex...\n";
-test_Func(\&test,$tests,$runtests);
+$t->tests(func     => \&test,
+          tests    => $tests);
+
+$t->tests(func     => \&test,
+          tests    => [ [ '02', $i ] ],
+          expected => "1 2 -- 1 -- 2 1 -- 2");
+$t->done_testing();
 
 1;
 # Local Variables:
@@ -99,6 +65,6 @@ test_Func(\&test,$tests,$runtests);
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:
 

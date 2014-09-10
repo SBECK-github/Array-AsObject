@@ -1,27 +1,16 @@
 #!/usr/bin/perl -w
 
-require 5.001;
-
-$runtests=shift(@ARGV);
-if ( -f "t/test.pl" ) {
-  require "t/test.pl";
-  $dir="./lib";
-  $tdir="t";
-} elsif ( -f "test.pl" ) {
-  require "test.pl";
-  $dir="../lib";
-  $tdir=".";
-} else {
-  die "ERROR: cannot find test.pl\n";
+BEGIN {
+  use Test::Inter;
+  $t = new Test::Inter 'as_hash';
 }
 
-unshift(@INC,$dir);
-use Array::AsObject;
+BEGIN { $t->use_ok('Array::AsObject'); }
 
 sub test {
   ($o,$full) = @_;
   $o = $obj{$o};
- 
+
   if ($full) {
 
     @ret = ();
@@ -52,36 +41,34 @@ sub test {
 }
 
 %obj       = ();
-$o         = new Array::AsObject qw( a b c a b );
-$obj{'01'} = $o;
+$obj{'01'} = new Array::AsObject qw( a b c a b );
 
 $i         = [ qw(a b) ];
-$o         = new Array::AsObject ('a', $i, $i, 'b', 'a');
-$obj{'02'} = $o;
+$obj{'02'} = new Array::AsObject ('a', $i, $i, 'b', 'a');
 
 $j         = [ qw(a b) ];
-$o         = new Array::AsObject ('a', $i, $j, 'b', 'a');
-$obj{'03'} = $o;
+$obj{'03'} = new Array::AsObject ('a', $i, $j, 'b', 'a');
 
 
 $tests = "
 
-01 0 ~ a 2 b 2 c 1
+01 0 => a 2 b 2 c 1
 
-01 1 ~ a 2 b 2 c 1
+01 1 => a 2 b 2 c 1
 
-02 0 ~ a 2 b 1
+02 0 => a 2 b 1
 
-02 1 ~ a 2 b 1 ARRAY(2) 2
+02 1 => a 2 b 1 ARRAY(2) 2
 
-03 0 ~ a 2 b 1
+03 0 => a 2 b 1
 
-03 1 ~ a 2 b 1 ARRAY(2) 1 ARRAY(3) 1
+03 1 => a 2 b 1 ARRAY(2) 1 ARRAY(3) 1
 
 ";
 
-print "as_hash...\n";
-test_Func(\&test,$tests,$runtests);
+$t->tests(func  => \&test,
+          tests => $tests);
+$t->done_testing();
 
 1;
 # Local Variables:
@@ -92,6 +79,6 @@ test_Func(\&test,$tests,$runtests);
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:
 

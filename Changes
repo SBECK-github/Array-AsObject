@@ -1,0 +1,29 @@
+Written by:
+   Sullivan Beck (sbeck@cpan.org)
+Any suggestions, bug reports, or donations :-) should be sent to me.
+
+This module was originally distributed as Set::ArrayAlt, but was
+renamed to Array::AsObject .
+
+1.00  2009-04-14
+  - Original release (as Set::ArrayAlt)
+  - Originally, all functionality was in Template::Plugins::ListOps.
+    Moved it here and made that module a wrapper around this one
+    so the list operations can be used outside of templates.
+
+1.01  2010-02-05
+  - When a new object is created, it starts as an empty list instead
+    of an undefined value.
+  - Any type of element (scalar, reference, undef) can be stored in
+    the list.
+  - Added is_subset/not_subset methods.
+
+1.02  2010-02-25
+  - Renamed the module to Array::AsObject at the suggestion of the
+    perl module list maintainers. The module was released under both
+    names, so 1.02 is both the final version of Set::ArrayAlt and
+    the initial release of Array::AsObject.
+
+1.03
+  - Changed HISTORY file to new Changes specification.
+

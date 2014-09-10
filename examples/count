@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Array::AsObject;
+
+my $obj = new Array::AsObject;
+
+$obj->list(qw(a a a b b c));
+
+print $obj->count('a'),"\n";                # 3
+print $obj->count('b'),"\n";                # 2
+print $obj->count('c'),"\n";                # 1
+print $obj->count('d'),"\n";                # 0

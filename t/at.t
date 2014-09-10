@@ -1,22 +1,11 @@
 #!/usr/bin/perl -w
 
-require 5.001;
-
-$runtests=shift(@ARGV);
-if ( -f "t/test.pl" ) {
-  require "t/test.pl";
-  $dir="./lib";
-  $tdir="t";
-} elsif ( -f "test.pl" ) {
-  require "test.pl";
-  $dir="../lib";
-  $tdir=".";
-} else {
-  die "ERROR: cannot find test.pl\n";
+BEGIN {
+  use Test::Inter;
+  $t = new Test::Inter 'at';
 }
 
-unshift(@INC,$dir);
-use Array::AsObject;
+BEGIN { $t->use_ok('Array::AsObject'); }
 
 sub test {
   (@test) = @_;
@@ -35,24 +24,25 @@ $obj->list(qw(a b c));
 
 $tests = "
 
-a ~ 1 _undef_ 1 _undef_
+a      => 1 __undef__ 1 __undef__
 
-4 ~ 1 _undef_ 1 _undef_
+4      => 1 __undef__ 1 __undef__
 
--4 ~ 1 _undef_ 1 _undef_
+-4     => 1 __undef__ 1 __undef__
 
-1 ~ 0 b 0 b
+1      => 0 b 0 b
 
--2 ~ 0 b 0 b
+-2     => 0 b 0 b
 
-1 2 ~ 1 _undef_ 0 b c
+1 2    => 1 __undef__ 0 b c
 
--1 -2 ~ 1 _undef_ 0 c b
+-1 -2  => 1 __undef__ 0 c b
 
 ";
 
-print "at...\n";
-test_Func(\&test,$tests,$runtests);
+$t->tests(func  => \&test,
+          tests => $tests);
+$t->done_testing();
 
 1;
 # Local Variables:
@@ -63,6 +53,6 @@ test_Func(\&test,$tests,$runtests);
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:
 

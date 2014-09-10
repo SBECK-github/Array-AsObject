@@ -1,22 +1,11 @@
 #!/usr/bin/perl -w
 
-require 5.001;
-
-$runtests=shift(@ARGV);
-if ( -f "t/test.pl" ) {
-  require "t/test.pl";
-  $dir="./lib";
-  $tdir="t";
-} elsif ( -f "test.pl" ) {
-  require "test.pl";
-  $dir="../lib";
-  $tdir=".";
-} else {
-  die "ERROR: cannot find test.pl\n";
+BEGIN {
+  use Test::Inter;
+  $t = new Test::Inter 'set operations';
 }
 
-unshift(@INC,$dir);
-use Array::AsObject;
+BEGIN { $t->use_ok('Array::AsObject'); }
 
 sub test {
   ($op,$o1,$o2,@test) = @_;
@@ -58,52 +47,53 @@ $obj{l8} = new Array::AsObject qw(b a);
 
 $tests = "
 
-union l1 l2 ~ a a b c a c d d e
+union l1 l2 => a a b c a c d d e
 
-union l1 l2 1 ~ a b c d e
+union l1 l2 1 => a b c d e
 
-difference l1 l2 ~ a b
+difference l1 l2 => a b
 
-difference l1 l2 1 ~ b
+difference l1 l2 1 => b
 
-intersection l1 l3 ~ a a c
+intersection l1 l3 => a a c
 
-intersection l1 l3 1 ~ a c
+intersection l1 l3 1 => a c
 
-symmetric_difference l4 l5 ~ a b b
+symmetric_difference l4 l5 => a b b
 
-symmetric_difference l4 l5 1 ~ b b
+symmetric_difference l4 l5 1 => b b
 
-is_equal l6 l7 ~ 0
+is_equal l6 l7 => 0
 
-is_equal l6 l7 1 ~ 1
+is_equal l6 l7 1 => 1
 
-is_equal l7 l8 ~ 1
+is_equal l7 l8 => 1
 
-is_equal l7 l8 1 ~ 1
+is_equal l7 l8 1 => 1
 
-not_equal l6 l7 ~ 1
+not_equal l6 l7 => 1
 
-not_equal l6 l7 1 ~ 0
+not_equal l6 l7 1 => 0
 
-not_equal l7 l8 ~ 0
+not_equal l7 l8 => 0
 
-not_equal l7 l8 1 ~ 0
+not_equal l7 l8 1 => 0
 
-is_subset l6 l7 0 ~ 1
+is_subset l6 l7 0 => 1
 
-is_subset l6 l7 1 ~ 1
+is_subset l6 l7 1 => 1
 
-is_subset l7 l6 0 ~ 0
+is_subset l7 l6 0 => 0
 
-is_subset l7 l6 1 ~ 1
+is_subset l7 l6 1 => 1
 
-is_subset l1 l6 0 ~ 1
+is_subset l1 l6 0 => 1
 
 ";
 
-print "set operations...\n";
-test_Func(\&test,$tests,$runtests);
+$t->tests(func  => \&test,
+          tests => $tests);
+$t->done_testing();
 
 1;
 # Local Variables:
@@ -114,6 +104,6 @@ test_Func(\&test,$tests,$runtests);
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:
 

@@ -1,5 +1,5 @@
 package Array::AsObject;
-# Copyright (c) 2009-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 2009-2014 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -11,7 +11,7 @@ use warnings;
 use strict;
 use Sort::DataTypes qw(sort_by_method sort_valid_method);
 
-use vars qw($VERSION);
+our($VERSION);
 $VERSION = "1.03";
 
 ###############################################################################
@@ -832,5 +832,5 @@ sub union {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

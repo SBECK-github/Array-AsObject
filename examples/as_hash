@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Array::AsObject;
+
+my $obj = new Array::AsObject;
+
+$obj->list(qw(a a b b c d d e));
+my %hash = $obj->as_hash();
+
+foreach my $key (sort keys %hash) {
+   my $val = $hash{$key};
+   print "$key\t$val\n";
+}
+
+# This will produce:
+#    a => 2
+#    b => 2
+#    c => 1
+#    d => 2
+#    e => 1
+

@@ -1,0 +1,51 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Array::AsObject;
+
+my $obj = new Array::AsObject;
+
+$obj->list(qw(a b c),undef,qw(a b c),undef,qw(d));
+
+print $obj->first(),"\n";      # a
+print $obj->last(),"\n";       # d
+
+my($idx,@idx);
+
+$idx = $obj->index('a');
+print $idx,"\n";               # 0
+$idx = $obj->index('b');
+print $idx,"\n";               # 1
+$idx = $obj->index('x');
+print $idx,"\n";               # -1 
+$idx = $obj->index();
+print $idx,"\n";               # 3
+
+$idx = $obj->rindex('a');
+print $idx,"\n";               # 4
+$idx = $obj->rindex('b');
+print $idx,"\n";               # 5
+$idx = $obj->rindex('x');
+print $idx,"\n";               # -1 
+$idx = $obj->rindex();
+print $idx,"\n";               # 7
+
+@idx = $obj->index('a');
+print "(".join(',',@idx).")\n"; # (0,4)
+@idx = $obj->index('b');
+print "(".join(',',@idx).")\n"; # (1,5)
+@idx = $obj->index('x');
+print "(".join(',',@idx).")\n"; # ()
+@idx = $obj->index();
+print "(".join(',',@idx).")\n"; # (3,7)
+
+@idx = $obj->rindex('a');
+print "(".join(',',@idx).")\n"; # (4,0)
+@idx = $obj->rindex('b');
+print "(".join(',',@idx).")\n"; # (5,1)
+@idx = $obj->rindex('x');
+print "(".join(',',@idx).")\n"; # ()
+@idx = $obj->rindex();
+print "(".join(',',@idx).")\n"; # (7,3)
+

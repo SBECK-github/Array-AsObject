@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Array::AsObject;
+
+my $obj = new Array::AsObject;
+
+$obj->list(qw(a b c d e));
+
+print $obj->at(2),"\n";                # c
+print join(" ",$obj->at(1,3,4)),"\n";  # b d e

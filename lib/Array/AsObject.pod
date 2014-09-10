@@ -25,7 +25,7 @@ below.
 
 =over 4
 
-=item new
+=item B<new>
 
    $obj = new Array::AsObject [@list];
 
@@ -44,15 +44,15 @@ and
 There is no restriction on the type of elements in @list. They can be
 scalars, references, objects, or undefs.
 
-=item version
+=item B<version>
 
    $vers = $obj->version();
 
 Gets the version of this module.
 
-=item err
+=item B<err>
 
-=item errmsg
+=item B<errmsg>
 
    $err = $obj->err();
 
@@ -72,7 +72,7 @@ undef is returned.
 
 =over 4
 
-=item as_hash
+=item B<as_hash>
 
    %hash = $obj->as_hash();
 
@@ -98,25 +98,25 @@ The following example should illustrate this:
 
    $i = [1,2];
    $j = [1,2];
-   @l = ('a', $i, 'b', $j, 'a', undef, undef, $i);
+   @l = ('a', 'a', 'b', $i, $i, $j, undef, undef);
    $o = new Array::AsObject(@l);
    ($c,$v) = $o->as_hash(1)
       => $c = { 1 => 2,
-                2 => 2,
-                3 => 1,
+                2 => 1,
+                3 => 2,
                 4 => 1,
                 5 => 2 }
          $v = { 1 => 'a',
-                2 => [1,2],
-                3 => 'b',
-                4 => [1,2],
+                2 => 'b',
+                3 => [1,2],    # $i
+                4 => [1,2],    # $j
                 5 => undef }
 
 Note that the two elements $i and $j are treated as different since
 they point to different references, even though the data is the same
 in those two lists.
 
-=item at
+=item B<at>
 
    $ele = $obj->at($n);
    @ele = $obj->at(@n);
@@ -132,14 +132,14 @@ Positions follow standard perl conventions with numbering starting at
 positions must refer to elements in the list (i.e. you may not refer
 to the 6th element in a list containing 5 elements).
 
-=item count
+=item B<count>
 
-   $num = $obj->count([$val]);
+    $num = $obj->count([$val]);
 
 This counts the number of times val appears in the list. If $val
 is not given, it counts the number of undef elements in the list.
 
-=item exists
+=item B<exists>
 
    $flag = $obj->exists(@val);
 
@@ -148,9 +148,9 @@ passed in, it tests for undef values.
 
 It returns 0 if any of the values do not exists in the list.
 
-=item first
+=item B<first>
 
-=item last
+=item B<last>
 
    $val = $obj->first();
    $val = $obj->last();
@@ -158,9 +158,9 @@ It returns 0 if any of the values do not exists in the list.
 These return the first or last elements of the list. If the list contains
 no elements, an error is set.
 
-=item index
+=item B<index>
 
-=item rindex
+=item B<rindex>
 
    $idx = $obj->index([$val]);
    @idx = $obj->index([$val]);
@@ -192,7 +192,7 @@ as expected. For example:
    (@idx) = $o->index($i);
       => @idx = (1)
 
-=item is_empty
+=item B<is_empty>
 
    $flag = $obj->is_empty([$undef]);
 
@@ -202,13 +202,13 @@ a list is empty only if the length is 0.
 If $undef is passed in, the list is also empty if it consists only
 of undef values.
 
-=item length
+=item B<length>
 
    $num = $obj->length();
 
 Returns the number of elements in the list.
 
-=item list
+=item B<list>
 
    @list = $obj->list();
 
@@ -225,7 +225,7 @@ and undef is returned.
 
 =over 4
 
-=item clear
+=item B<clear>
 
    $obj->clear();
 
@@ -237,13 +237,13 @@ list).
 This sets all elements in the list to be undef (preserving the length).
 The list must be defined or an error results.
 
-=item compact
+=item B<compact>
 
    $obj->compact();
 
 This removes any undef objects from the list.
 
-=item delete
+=item B<delete>
 
    $obj->delete($all,$undef,@val);
 
@@ -255,7 +255,7 @@ occurence of each value is removed.
 If $undef is 1, values are replaced with undef. Otherwise, they
 are completely removed.
 
-=item delete_at
+=item B<delete_at>
 
    $obj->delete($undef,@idx);
 
@@ -266,7 +266,7 @@ last to first.
 If $undef is 1, values are replaced with undef. Otherwise, they
 are completely removed.
 
-=item fill
+=item B<fill>
 
    $obj->fill([$val,] [$start,] [$length]);
 
@@ -288,16 +288,16 @@ $start is the first element after the list.
 So if list contains 3 elements, and $start is 1, $length will default
 to 2 (the number of elements in the list starting at index 1.
 
-=item list
+=item B<list>
 
    $obj->list(@list);
 
 This sets the object to contain the given list. Any previous list is
 replaced.
 
-=item min
+=item B<min>
 
-=item max
+=item B<max>
 
    $ele = $obj->min([$method [,@args]]);
    $ele = $obj->max([$method [,@args]]);
@@ -315,9 +315,9 @@ For example, to get the first word alphabetically, use
 
    $ele = $obj->min("alphabetic");
 
-=item pop
+=item B<pop>
 
-=item shift
+=item B<shift>
 
    $val = $obj->pop();
 
@@ -325,9 +325,9 @@ For example, to get the first word alphabetically, use
 
 These perform the standard pop/shift operations.
 
-=item push
+=item B<push>
 
-=item unshift
+=item B<unshift>
 
    $obj->push(@list);
 
@@ -335,19 +335,19 @@ These perform the standard pop/shift operations.
 
 These perform the standard push/unshift operations.
 
-=item randomize
+=item B<randomize>
 
    $obj->randomize();
 
 This randomly shuffles the list.
 
-=item reverse
+=item B<reverse>
 
    $obj->reverse();
 
 This reverses the list.
 
-=item rotate
+=item B<rotate>
 
    $obj->rotate([$num]);
 
@@ -361,14 +361,14 @@ removed and pushed on to the end a total of $num times.
 If $num is a negative number, the last element from the list is
 removed and shifted onto the front a total of $num times.
 
-=item set
+=item B<set>
 
    $obj->set($index [,$val]);
 
 This sets the list index to the given value, or undef if no value
 is passedin.
 
-=item sort
+=item B<sort>
 
    $obj->sort([$method [,@args]]);
 
@@ -382,7 +382,7 @@ forward and reverse sorting.
 
 If no method is given, it defaults to alphabetical sorting.
 
-=item splice
+=item B<splice>
 
    @vals = $obj->splice([$start,] [$length,] [@list]);
 
@@ -394,7 +394,7 @@ is omitted (or undefined), it defaults to the end of the list.
 The values removed are returned, and are replaced with @list if
 present.
 
-=item unique
+=item B<unique>
 
    $obj->unique();
 
@@ -416,7 +416,7 @@ The original objects are unmodified in all cases.
 
 =over 4
 
-=item difference
+=item B<difference>
 
    $obj3 = $obj->difference($obj2 [,$unique]);
 
@@ -435,7 +435,7 @@ It should be noted that both "b" elements in the example will be
 kept regardless of the value of $unique because the $unique
 flag only affects elements being removed.
 
-=item intersection
+=item B<intersection>
 
    $obj3 = $obj->intersection($obj2 [,$unique]);
 
@@ -450,9 +450,9 @@ For example, the intersection of two lists (a a b b c) and (a a c d)
 is either (a a c) or (a c). If $unique is non-zero, the second is
 given.
 
-=item is_equal
+=item B<is_equal>
 
-=item not_equal
+=item B<not_equal>
 
    $flag = $obj->is_equal($obj2 [,$unique]);
    $flag = $obj->not_equal($obj2 [,$unique]);
@@ -466,9 +466,9 @@ If $unique is non-zero, the count of each type of element is
 ignored so (a,a,b) = (a,b). Otherwise, the count is important
 so (a,a,b) != (a,b).
 
-=item is_subset
+=item B<is_subset>
 
-=item not_subset
+=item B<not_subset>
 
    $flag = $obj->is_subset($obj2 [,$unique]);
    $flag = $obj->not_subset($obj2 [,$unique]);
@@ -483,7 +483,7 @@ instance in $obj. So (a a b) is a subset of (a a a b c) but NOT of
 If $unique is passed in, every element in $obj2 must exists in $obj
 but the count is unimportant, so (a a b) is a subset of (a b c).
 
-=item symmetric_difference
+=item B<symmetric_difference>
 
    $obj3 = $obj->symmetric_difference($obj2 [,$unique]);
 
@@ -503,7 +503,7 @@ second is used.
 Note that both instances of 'b' are kept because the $unique flag
 only affects elements which exist in both objects.
 
-=item union
+=item B<union>
 
    $obj3 = $obj->union($obj2 [,$unique]);
 
