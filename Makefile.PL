@@ -16,6 +16,7 @@ my %script_prereq = (
 
 my %test_prereq = (
    'Storable'                 => '0',
+   'Test::Inter'              => '0',
    'Test::More'               => '0',
 );
 
@@ -48,15 +49,23 @@ WriteMakefile(
    ($EU_MM_V >= 6.64
     ? (TEST_REQUIRES   => \%test_prereq)
     : ()),
+
+   ($EU_MM_V > 6.45
+    ? (META_MERGE => {
+        resources => {
+           repository => {
+              type => "git",
+              web  => "https://github.com/SBECK-github/Array-AsObject",
+              url  => "git://github.com/SBECK-github/Array-AsObject.git",
+           }
+        }
+       })
+    : ()),
    EXE_FILES        => [
-                        '.git/hooks/pre-commit.sample',
-                        '.git/hooks/post-update.sample',
-                        '.git/hooks/pre-applypatch.sample',
-                        '.git/hooks/applypatch-msg.sample',
-                        '.git/hooks/update.sample',
-                        '.git/hooks/pre-rebase.sample',
-                        '.git/hooks/pre-push.sample',
-                        '.git/hooks/commit-msg.sample',
-                        '.git/hooks/prepare-commit-msg.sample',
+                        'examples/at',
+                        'examples/exists',
+                        'examples/count',
+                        'examples/as_hash',
+                        'examples/index',
                        ],
 );

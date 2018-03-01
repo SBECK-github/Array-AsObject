@@ -26,4 +26,5 @@ renamed to Array::AsObject .
 
 1.03
   - Changed HISTORY file to new Changes specification.
-
+  - Moved repository to GitHub.  Gabor Szabo
+  - Some POD documentation improvements.
