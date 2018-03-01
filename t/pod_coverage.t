@@ -45,6 +45,8 @@ if (-f "$testdir/pod_coverage.ign") {
    chomp(@ign);
 }
 
+chdir("..")  if ($testdir eq '.');
+
 if (@ign) {
 
    my @mod = all_modules();

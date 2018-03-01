@@ -12,13 +12,13 @@ Array::AsObject - full set of array and set operations
 
 This module attempts to provide a complete set of array operations,
 including set operations. It acts as a standalone module, or is
-available in Template::Toolkit templates using the companion module
-Template::Plugin::ListOps .
+available in L<Template::Toolkit> templates using the companion module
+L<Template::Plugin::ListOps>.
 
-It performs many of the same functions as the Set::Array module,
+It performs many of the same functions as the L<Set::Array> module,
 but has better support for handling duplicate elements in
-lists, and does not require the Want module.  For more
-details, please refer to the HISTORY AND RATIONALE section
+lists, and does not require the L<Want> module.  For more
+details, please refer to the L</"HISTORY AND RATIONALE"> section
 below.
 
 =head1 BASE OBJECT METHODS
@@ -29,10 +29,10 @@ below.
 
    $obj = new Array::AsObject [@list];
 
-This creates a new Array::AsObject object. If @list is passed in, this
+This creates a new C<Array::AsObject> object. If C<@list> is passed in, this
 is set to the initial list of elements.
 
-If @list is passed in, the following two are equivalent:
+If C<@list> is passed in, the following two are equivalent:
 
    $obj = new Array::AsObject @list;
 
@@ -41,8 +41,8 @@ and
    $obj = new Array::AsObject;
    $obj->list(@list);
 
-There is no restriction on the type of elements in @list. They can be
-scalars, references, objects, or undefs.
+There is no restriction on the type of elements in C<@list>. They can be
+scalars, references, objects, or C<undef>.
 
 =item B<version>
 
@@ -68,7 +68,7 @@ If an operation did produce an error, this will get the error message.
 
 The following methods examine a list but do not modify the object.
 They will all produce an error if the list has not been defined and
-undef is returned.
+C<undef> is returned.
 
 =over 4
 
@@ -77,21 +77,21 @@ undef is returned.
    %hash = $obj->as_hash();
 
 This returns a hash that describes the scalars in the list contained
-in $obj. References and undef values are ignored.
+in C<$obj>. References and C<undef> values are ignored.
 
-Every scalar in the list is one of the keys in %hash.  The value of
-%hash is the number of times that element appears in the list.
+Every scalar in the list is one of the keys in C<%hash>.  The value of
+C<%hash> is the number of times that element appears in the list.
 
    ($count,$vals) = $obj->as_hash(1);
 
 This returns two hash references that describe ALL values in the
-list, including references, objects, and undef.
+list, including references, objects, and C<undef>.
 
 Every unique value in the list is assigned a label (which has no
-significance). The hash %$vals has the labels as keys and the
+significance). The hash C<%$vals> has the labels as keys and the
 actual values as values for the keys.
 
-The hash %$count has the labels as keys and the values are the
+The hash C<%$count> has the labels as keys and the values are the
 number of times that value appears in the list.
 
 The following example should illustrate this:
@@ -112,7 +112,7 @@ The following example should illustrate this:
                 4 => [1,2],    # $j
                 5 => undef }
 
-Note that the two elements $i and $j are treated as different since
+Note that the two elements C<$i> and C<$j> are treated as different since
 they point to different references, even though the data is the same
 in those two lists.
 
@@ -121,8 +121,8 @@ in those two lists.
    $ele = $obj->at($n);
    @ele = $obj->at(@n);
 
-This returns the element at position $n in the list, or a list of the
-elements at the positions given in the list @n.
+This returns the element at position C<$n> in the list, or a list of the
+elements at the positions given in the list C<@n>.
 
 In scalar context, only a single position may be passed in. In list
 context, any number of positions may be passed in.
@@ -136,15 +136,15 @@ to the 6th element in a list containing 5 elements).
 
     $num = $obj->count([$val]);
 
-This counts the number of times val appears in the list. If $val
-is not given, it counts the number of undef elements in the list.
+This counts the number of times val appears in the list. If C<$val>
+is not given, it counts the number of C<undef> elements in the list.
 
 =item B<exists>
 
    $flag = $obj->exists(@val);
 
-This returns 1 if every value exists in the list. If @val is not
-passed in, it tests for undef values.
+This returns 1 if every value exists in the list. If C<@val> is not
+passed in, it tests for C<undef> values.
 
 It returns 0 if any of the values do not exists in the list.
 
@@ -168,8 +168,8 @@ no elements, an error is set.
    $idx = $obj->rindex([$val]);
    @idx = $obj->rindex([$val]);
 
-In list context, these return the index of every occurrence of $val in
-the list. If $val is not passed in, the indices of all undef elements
+In list context, these return the index of every occurrence of C<$val> in
+the list. If C<$val> is not passed in, the indices of all C<undef> elements
 are returned.
 
 If the value is not found, -1 is returned in scalar context, or
@@ -180,7 +180,7 @@ The rindex function returns them in reverse order.
 In scalar context, the index and rindex methods return the index of
 the first or last occurrence of $val in the list.
 
-$val can be a scalar, undef, or a reference, and all will work
+$val can be a scalar, C<undef>, or a reference, and all will work
 as expected. For example:
 
    $i = [1,2];
@@ -200,7 +200,7 @@ This checks to see if the list is empty. If $undef is not passed in,
 a list is empty only if the length is 0.
 
 If $undef is passed in, the list is also empty if it consists only
-of undef values.
+of C<undef> values.
 
 =item B<length>
 
@@ -221,7 +221,7 @@ This returns the list stored in the object.
 The following methods will modify the object.
 
 They will all produce an error if the list has not been defined
-and undef is returned.
+and C<undef> is returned.
 
 =over 4
 
@@ -234,14 +234,14 @@ list).
 
    $obj->clear(1);
 
-This sets all elements in the list to be undef (preserving the length).
+This sets all elements in the list to be C<undef> (preserving the length).
 The list must be defined or an error results.
 
 =item B<compact>
 
    $obj->compact();
 
-This removes any undef objects from the list.
+This removes any C<undef> objects from the list.
 
 =item B<delete>
 
@@ -252,7 +252,7 @@ This deletes occurences of each values from the list.
 If $all is 1, all occurences are removed. Otherwise, only the first
 occurence of each value is removed.
 
-If $undef is 1, values are replaced with undef. Otherwise, they
+If $undef is 1, values are replaced with C<undef>. Otherwise, they
 are completely removed.
 
 =item B<delete_at>
@@ -263,7 +263,7 @@ This deletes elements at the given indices. The order of the
 indices is not important. They will be deleted in the order of
 last to first.
 
-If $undef is 1, values are replaced with undef. Otherwise, they
+If $undef is 1, values are replaced with C<undef>. Otherwise, they
 are completely removed.
 
 =item B<fill>
@@ -271,7 +271,7 @@ are completely removed.
    $obj->fill([$val,] [$start,] [$length]);
 
 This sets elements of a list to be $val. If $val is not passed in,
-values are set to undef.
+values are set to C<undef>.
 
 $start can be a positive or negative number. It must be an index
 in the list. It can also be the index of the first element after
@@ -365,7 +365,7 @@ removed and shifted onto the front a total of $num times.
 
    $obj->set($index [,$val]);
 
-This sets the list index to the given value, or undef if no value
+This sets the list index to the given value, or C<undef> if no value
 is passedin.
 
 =item B<sort>
@@ -388,8 +388,8 @@ If no method is given, it defaults to alphabetical sorting.
 
 This performs the perl splice command on a list.
 
-If $start is omitted (or is undefined), it defaults to 0. If $length
-is omitted (or undefined), it defaults to the end of the list.
+If $start is omitted (or is C<undef>), it defaults to 0. If $length
+is omitted (or C<undef>), it defaults to the end of the list.
 
 The values removed are returned, and are replaced with @list if
 present.
@@ -458,7 +458,7 @@ given.
    $flag = $obj->not_equal($obj2 [,$unique]);
 
 These take two lists and test to see if they are equal. If an
-error is encountered, undef is returned, but no error is stored.
+error is encountered, C<undef> is returned, but no error is stored.
 
 The order of the elements is ignored so (a,b) = (b,a).
 
@@ -530,9 +530,9 @@ looked around.
 
 The module that came closest to my needs was Set::Array. Although not
 a perfect match for what I wanted (I really wanted better support for
-lists with duplicate elements), it came close enough, so I wrote a
-wrapper module (Template::Plugin::ListOps) around it to do most of
-what I wanted.
+lists with duplicate elements), it came close enough to the
+functionality I initially needed, so I wrote a wrapper module
+(Template::Plugin::ListOps) around it to do most of what I wanted.
 
 Unfortunately, I discovered almost immediately that Set::Array
 suffered from a fairly serious problem. It depends on the Want
@@ -542,10 +542,10 @@ correctly, though I could be wrong about that), and unfortunately,
 some of the places I needed my module to run failed due to those
 problems.
 
-I looked at the Want module, but correcting it was beyond my abiltity,
-so the best solution seemed to be to rewrite the module without
-depending on Set::Array. This would also allow me to add the
-functionality that I wanted.
+I looked at the Want module, but correcting it was far enough out of
+my comfort zone that the best solution seemed to be to rewrite the
+module without depending on Set::Array. This would also allow me to
+add the functionality that I wanted.
 
 So I did that. I rewrote each function to do the list/set operation
 I wanted instead of calling Set::Array functions.
@@ -554,7 +554,7 @@ Almost as soon as I was done (and perhaps even before), I started
 regretting rewriting the module in that way. I should have written a
 standalone module and then had the Template::Plugin::ListOps be a
 wrapper for it instead of Set::Array... but in the interest of time, I
-didn't go back and redo it... until later.
+didn't go back and redo it until later.
 
 Later, I ran into a case where I wanted the set/list functionality
 from Template::Plugin::ListOps for another perl application. At
@@ -582,7 +582,7 @@ only to all-scalar lists.
 
 It may well be that the problems with the Want module have been
 corrected at this point, and that I could have used Set::Array, but
-since some of the functionality I needed was the enhanced duplicate
+since some of the functionality I wanted was the enhanced duplicate
 element handling, and since creating this module from what I'd already
 written was actually a pretty easy task, I decided to go ahead with
 the creation of this module.
@@ -611,6 +611,10 @@ Versions of this module before 1.02 were released under the name
 Set::ArrayAlt. Version 1.02 was released simultaneously under the
 names Set::ArrayAlt and Array::AsObject. Versions after 1.02 will
 only be released under the name Array::AsObject.
+
+=head1 SEE ALSO
+
+L<Set::Array> - a module with similar functionality
 
 =head1 KNOWN PROBLEMS
 

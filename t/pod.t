@@ -43,6 +43,8 @@ if (-f "$testdir/pod.ign") {
    chomp(@ign);
 }
 
+chdir("..")  if ($testdir eq '.');
+
 if (@ign) {
 
    my @file = all_pod_files();
